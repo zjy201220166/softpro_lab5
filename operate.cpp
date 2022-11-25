@@ -87,7 +87,6 @@ void operate::run()
         }
     }
     QStringList str=pair[index].split(",");
-    qDebug()<<map->find(str[0])<<map->find(str[1]);
     while(map->find(str[0])==map->find(str[1]))//在同一并查集内
     {
         qDebug()<<"jump to next";
