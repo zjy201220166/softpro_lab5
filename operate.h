@@ -12,6 +12,7 @@
 #include <QMessageBox>
 
 #include "union_find.h"
+#include "output.h"
 namespace Ui {
 class operate;
 }
@@ -34,6 +35,7 @@ private:
     QVector<QString>pair;
     int index;
     union_find* map;
+    Output* ou;
     void run();
     void Init();
 };

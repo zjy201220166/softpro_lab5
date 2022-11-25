@@ -21,6 +21,7 @@ void operate::Init()
      connect(ui->pushButton_2,SIGNAL(clicked(bool)),this,SLOT(inequalbtn()));
      connect(ui->pushButton_3,SIGNAL(clicked(bool)),this,SLOT(unsure()));
      map=new union_find;//并查集
+     ou=new Output;
 
 }
 void operate::read_addr(QString addr)
@@ -36,7 +37,8 @@ void operate::read_addr(QString addr)
     {
         QString str;
         in>>str;
-        //qDebug()<<str;
+        qDebug()<<str;
+        if(str!="")
         pair.push_back(str);
     }
     file.close();
@@ -51,6 +53,7 @@ void operate::equalbtn()
         QStringList str=pair[index].split(",");
         if(map->find(str[0])!=map->find(str[1]))
         map->merge(str[0],str[1]);//加入并查集
+        ou->addans(str[0]+","+str[1]);//加入结果集
         index++;
         run();
     }
@@ -74,7 +77,7 @@ void operate::unsure()
     }
 }
 void operate::run()
-{
+{   qDebug()<<index;
     ui->textEdit->clear();
     ui->textEdit_2->clear();
     if(index>=pair.size())
@@ -82,16 +85,27 @@ void operate::run()
         if(QMessageBox::question(this,"提示","所有程序对判断完成！",QMessageBox::Yes))
         {
             //点击确定
-            this->hide();
-
+            ou->writeinfile();
+            this->close();
+            return;
         }
     }
     QStringList str=pair[index].split(",");
     while(map->find(str[0])==map->find(str[1]))//在同一并查集内
     {
         qDebug()<<"jump to next";
-
+        ou->addans(str[0]+","+str[1]);//加入结果集
         index++;
+        if(index>=pair.size())
+        {
+            if(QMessageBox::question(this,"提示","所有程序对判断完成！",QMessageBox::Yes))
+            {
+                //点击确定
+                ou->writeinfile();
+                this->close();
+                return;
+            }
+        }
         str=pair[index].split(",");
     }
     QFile p1(str[0]);

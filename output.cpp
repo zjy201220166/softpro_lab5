@@ -9,7 +9,8 @@ void Output::addans(QString s)
     ans.push_back(s);
 }
 void Output::writeinfile()
-{
+{   if(ans.size()==0)
+        return;
     QFile file("output_equal.csv");
     if(!file.open(QIODevice::WriteOnly))
     {
@@ -17,6 +18,7 @@ void Output::writeinfile()
         return;
     }
     QTextStream out(&file);
+
     for(int i=0;i<ans.size();i++)
     {
         out<<ans[i]<<endl;
