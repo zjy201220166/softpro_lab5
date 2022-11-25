@@ -19,11 +19,13 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     operate.cpp \
+    output.cpp \
     union_find.cpp
 
 HEADERS += \
     mainwindow.h \
     operate.h \
+    output.h \
     union_find.h
 
 FORMS += \
